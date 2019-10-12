@@ -40,7 +40,7 @@ Before continuing, complete the following:
 ## Application requirements
 
   You will be calculating some simple statistics about United States
-  Weather History, using a [FiveThirtyEight](https://github.com/fivethirtyeight/us-weather-history) dataset. The datasets are stored in CSVs and
+  Weather History, using a [FiveThirtyEight](https://github.com/fivethirtyeight/data) dataset. The datasets are stored in CSVs and
   are located in the data/ directory of this repo for your convenience.
 
   The csvs all have the same format:
