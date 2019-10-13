@@ -67,60 +67,53 @@ Column | Description
   These statistics should be simple to calculate, since the focus of
   this project is to learn how to create a practical haskell application.
 
-  The metrics you need to calculate are:
+  The metrics you need to calculate are below:
     
-    1. For each date, what is the range (difference between max and min) of the temperatures for that date?
+  1. For each date, what is the range (difference between max and min) of the temperatures for that date?
        
-       You will not generate a json file contining this information for
-       every date; rather you will take a list of dates and generate
-       your json based on the data for those dates alone. You can
-       think of this as an API endpoint receiving a request for a
-       batch of dates, and being asked to serve up json containing
-       statistics about that data.
+  The output json should be an array of objects with the following format:
 
-       The output json should be an object with the following format:
+  ```json
+  { "date": "YYYY-MM-DD",
+    "temp_range": <SomeDouble, rounded to 3 decimal places>
+  }
+  ```
 
-       ```json
-       { "date": "YYYY-MM-DD",
-         "temp_range": <SomeDouble, rounded to 3 decimal places>
-       }
-       ```
+  2. For the date 2014-07-01 which is the date for which the statistic X is most similar (the difference between the two is smallest),
+     for each X in:
+       a) actual mean temperature
+       b) actual max temperature
+       c) actual min temperature
+       d) average precipitation
 
-    2. For the date 1970-01-01 (your clients are unix enthusiasts),
-       for each year Y in Y-01-01:
-         Which is the year Y for which the statistic X is most similar (the difference between the two is smallest), for each X in:
-           a) actual mean temperature
-           b) actual max temperature
-           c) actual min temperature
-           d) average precipitation
+  The output json should be an object with the following format:
 
-       The output json should be an object with the following format:
-
-       ```json
-         { "actual_mean_temp_similar": {
-             "year": YYYY,
-             "difference": <SomeDouble, rounded to 3 decimal places>
-           },
-           "actual_max_temp_similar": {
-             "year": YYYY,
-             "difference": <SomeDouble, rounded to 3 decimal places>
-           },
-           "actual_min_temp_similar": {
-             "year": YYYY,
-             "difference": <SomeDouble, rounded to 3 decimal places>
-           },
-           "average_precipitation_similar": {
-             "year": YYYY,
-             "difference": <SomeDouble, rounded to 3 decimal places>
-           },
-         }
-       ```
+  ```json
+  { "actual_mean_temp_similar": {
+      "year": YYYY,
+      "difference": <SomeDouble, rounded to 3 decimal places>
+    },
+    "actual_max_temp_similar": {
+      "year": YYYY,
+      "difference": <SomeDouble, rounded to 3 decimal places>
+    },
+    "actual_min_temp_similar": {
+      "year": YYYY,
+      "difference": <SomeDouble, rounded to 3 decimal places>
+    },
+    "average_precipitation_similar": {
+      "year": YYYY,
+      "difference": <SomeDouble, rounded to 3 decimal places>
+    },
+  }
+  ```
 
 ## Library recommendations
 
-For CSV parsing: [cassava](http://hackage.haskell.org/package/cassava), [siphon](http://hackage.haskell.org/package/siphon)
-For generating JSON: [aeson](http://hackage.haskell.org/package/aeson)
-Text/Bytestring: [text](http://hackage.haskell.org/package/text), [bytestring](http://hackage.haskell.org/package/bytestring)
+For CSV parsing: [cassava](http://hackage.haskell.org/package/cassava), [siphon](http://hackage.haskell.org/package/siphon)</br>
+For generating JSON: [aeson](http://hackage.haskell.org/package/aeson)</br>
+For time: [time](http://hackage.haskell.org/package/time), [chronos](http://hackage.haskell.org/package/chronos)
+Text/Bytestring: [text](http://hackage.haskell.org/package/text), [bytestring](http://hackage.haskell.org/package/bytestring)</br>
 
 Please note that both `cassava` and `aeson` have very powerful mechanisms
 for automatically deriving CSV encoders/decoders and JSON encoders/decoders,
@@ -131,7 +124,7 @@ understand how these libraries work.
 
 ## Non-obvious Function helpers
 
-For rounding, i recommend using `showFFloat` from `base`'s `Numeric`
+For rounding, I recommend using `showFFloat` from `base`'s `Numeric`
 module.
 
 ```haskell
